@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Games from '@/views/Games'
 import Dictionaries from '@/views/Dictionaries'
+import GameDetail from '@/views/GameDetail'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/games',
     name: 'Games',
     component: Games
+  },
+  {
+    path: '/games/:gameId',
+    name: 'GameDetail',
+    component: GameDetail
   },
   {
     path: '/dictionaries',
