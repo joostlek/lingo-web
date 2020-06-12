@@ -1,5 +1,5 @@
 <template>
-
+<div class="header-container">
   <div class="header">
     <div class="logocontainer">
       <router-link to="/">
@@ -13,6 +13,9 @@
       <router-link :to="{name: 'Dictionaries'}">Dictionaries</router-link>
     </div>
   </div>
+  <hr />
+</div>
+
 </template>
 
 <script>
@@ -28,6 +31,13 @@
 
 <style lang="scss" scoped>
 
+  hr {
+    width: 70%;
+    height: 1px;
+    border-bottom: 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .header {
     display: flex;
     justify-content: space-between;
@@ -45,5 +55,8 @@
         text-shadow: 0 0 20px var(--lingo-8);
       }
     }
+  }
+  .header-container {
+    margin-bottom: 32px;
   }
 </style>
