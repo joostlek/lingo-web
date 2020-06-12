@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { Service } from 'axios-middleware';
+import DataMiddleware from '../middleware/DataMiddleware';
 
 const api = {}
 api.install = function (Vue) {
@@ -6,7 +8,14 @@ api.install = function (Vue) {
     ? 'https://api.lingo.joostlek.dev/api/v1'
     : 'http://localhost:8080/api/v1';
 
-  Vue.prototype.$api = axios.create({ baseURL: baseURL });
+    const apiInstance = axios.create({ baseURL: baseURL });
+
+    const service = new Service(apiInstance);
+
+    service.register([
+        new DataMiddleware(),
+    ]);
+    Vue.prototype.$api = apiInstance;
 };
 
 export default api;
