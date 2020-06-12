@@ -5,7 +5,8 @@ COPY . .
 # Build project
 ARG VUE_APP_BRANCH
 ENV VUE_APP_BRANCH=$VUE_APP_BRANCH
-RUN VUE_APP_BRANCH=$VUE_APP_BRANCH npm run build
+RUN yarn
+RUN VUE_APP_BRANCH=$VUE_APP_BRANCH yarn build
 
 # ---- Prod ----
 FROM nginx:alpine
