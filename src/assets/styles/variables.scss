@@ -1,0 +1,29 @@
+  :root {
+    --text-color: #8d8f91;
+    --panel-background: #f3f8fa;
+    --inner-sidebar-background: #F8F9F9;
+    --sidebar-width: 286px;
+    --header-link-color: #000000;
+
+    --lingo: #729ee0;
+    --lingo-10: rgba(114, 158, 224, 1.0);
+    --lingo-9: rgba(114, 158, 224, 0.9);
+    --lingo-8: rgba(114, 158, 224, 0.8);
+    --lingo-7: rgba(114, 158, 224, 0.7);
+    --lingo-6: rgba(114, 158, 224, 0.6);
+    --lingo-5: rgba(114, 158, 224, 0.5);
+    --lingo-4: rgba(114, 158, 224, 0.4);
+    --lingo-3: rgba(114, 158, 224, 0.3);
+    --lingo-2: rgba(114, 158, 224, 0.2);
+    --lingo-1: rgba(114, 158, 224, 0.1);
+  }
+
+  // Breakpoints
+  $bp-mobile-sm: 321px;
+  $bp-mobile-md: 376px;
+  $bp-mobile-lg: 414px;
+  $bp-tablet-sm: 562px;
+  $bp-tablet-md: 768px;
+  $bp-desktop-sm: 1120px;
+  $bp-desktop-md: 1280px;
+  $bp-desktop-lg: 1536px;
