@@ -1,11 +1,93 @@
 <template>
-    <div></div>
+    <div>
+        <h3>Game</h3>
+        <div v-if="gameState.game != null">
+            <h6>GameID: {{game.gameId}}</h6>
+            <RoundSelector v-if="rounds != null && rounds.length > 0" :rounds="rounds" v-model="selectedRound"></RoundSelector>
+            <RoundView v-if="selectedRound" :round="getSelectedRound" @submit="onGuess"/>
+        </div>
+    </div>
 </template>
 
 <script>
-  export default {
-    name: 'GameDetail'
-  }
+    import RoundSelector from '@/components/RoundSelector'
+    import RoundView from '@/components/RoundView'
+    export default {
+        name: 'GameDetail',
+        components: { RoundView, RoundSelector },
+        data: () => ({
+            gameState: {
+                game: null,
+                loading: false,
+                error: null,
+            },
+            roundsState: {
+                rounds: null,
+                loading: false,
+                error: null,
+            },
+            selectedRound: '',
+        }),
+        methods: {
+            async getGame() {
+                const { data } = await this.$api.get(`/games/${this.gameId}`)
+                this.gameState.game = data;
+            },
+            async getRounds() {
+                const { data } = await this.$api.get(`/games/${this.gameId}/rounds`)
+                data.forEach((round) => {
+                    round.turns = null
+                });
+                this.selectedRound = data[data.length - 1].roundId;
+                this.roundsState.rounds = data;
+            },
+            async getTurnsForRoundId(roundId) {
+                const round = this.getRoundById(roundId);
+                if (round.turns === null) {
+                    const { data } = await this.$api.get(`/games/${this.gameId}/rounds/${roundId}/turns`);
+                    round.turns = data.sort((nodeA, nodeB) => nodeB.count - nodeA.count);
+                }
+            },
+            async doGuess(roundId, guess) {
+                const { data } = await this.$api.post(`/games/${this.gameId}/rounds/${roundId}/turns`, {guess})
+                const round = this.getRoundById(roundId);
+                round.turns = [data, ...round.turns];
+            },
+            getRoundById(roundId) {
+                return this.rounds.find((round) => round.roundId === roundId)
+            },
+            async onGuess(event) {
+                await this.doGuess(event.roundId, event.guess);
+            }
+        },
+        computed: {
+            game() {
+                return this.gameState.game;
+            },
+            rounds() {
+                return this.roundsState.rounds;
+            },
+            gameId() {
+                return this.$route.params.gameId;
+            },
+            getSelectedRound() {
+                if (this.rounds == null) return null;
+                return this.getRoundById(this.selectedRound)
+            },
+        },
+        watch: {
+            selectedRound(newRoundId) {
+                this.getTurnsForRoundId(newRoundId)
+                .then(() => {
+
+                });
+            },
+        },
+        async created() {
+            await this.getGame();
+            await this.getRounds();
+        },
+    }
 </script>
 
 <style scoped>

@@ -5,6 +5,16 @@
     --sidebar-width: 286px;
     --header-link-color: #000000;
 
+    --present-shade: rgba(250, 192, 82, 0.2);
+    --correct-shade: rgba(151, 207, 199, 0.2);
+    --invalid-shade: rgba(204, 204, 204, 0.2);
+    --present: rgba(250, 192, 82, 0.5);
+    --correct: rgba(151, 207, 199, 0.5);
+    --invalid: rgba(204, 204, 204, 0.5);
+    --present-text: var(--text-color);
+    --correct-text: var(--text-color);
+    --invalid-text: var(--text-color);
+
     --lingo: #729ee0;
     --lingo-10: rgba(114, 158, 224, 1.0);
     --lingo-9: rgba(114, 158, 224, 0.9);
@@ -16,6 +26,8 @@
     --lingo-3: rgba(114, 158, 224, 0.3);
     --lingo-2: rgba(114, 158, 224, 0.2);
     --lingo-1: rgba(114, 158, 224, 0.1);
+
+    --lingo-dark: #314461;
   }
 
   // Breakpoints
