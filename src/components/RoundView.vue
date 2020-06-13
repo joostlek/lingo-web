@@ -1,6 +1,6 @@
 <template>
     <div>
-        <WordInput :preset="round.word" @submit="submit" />
+        <WordInput :preset="round.word" @submit="submit" :key="round.roundId + round.turns.length" />
         <div v-if="round.turns !== null">
             <div v-for="(turn, idx) in round.turns" :key="idx">
                 <Turn :turn="turn" />

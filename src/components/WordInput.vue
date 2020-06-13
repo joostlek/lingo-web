@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :key="preset">
         <Character v-for="(character, idx) in characters" :key="idx" v-model="characters[idx]" input></Character>
         <button @click="submit">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 448.011 448.011" xml:space="preserve">
@@ -27,11 +27,12 @@
             characters: {}
         }),
         created() {
-            this.extractCharacters();
+            this.extractCharacters(this.preset);
         },
         methods: {
-            extractCharacters() {
-                for (let x = 0, c = ''; c = this.preset.charAt(x); x++) {
+            extractCharacters(word) {
+                this.characters = {};
+                for (let x = 0, c = ''; c = word.charAt(x); x++) {
                     if (c === ' ') {
                         c = '';
                     }
@@ -49,6 +50,14 @@
             },
             submit() {
                 this.$emit('submit', this.concatCharacters());
+                for (let charactersKey in this.characters) {
+                    this.characters[charactersKey] = '';
+                }
+            }
+        },
+        watch: {
+            preset(word) {
+                this.extractCharacters(word);
             }
         }
     }

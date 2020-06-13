@@ -52,8 +52,12 @@
             },
             async doGuess(roundId, guess) {
                 const { data } = await this.$api.post(`/games/${this.gameId}/rounds/${roundId}/turns`, {guess})
+                // let roundData = await this.$api.get(`/games/${this.gameId}/rounds/${roundId}`).data;
                 const round = this.getRoundById(roundId);
+                // const index = this.roundsState.rounds.indexOf(round);
                 round.turns = [data, ...round.turns];
+                // roundData = {...roundData, turns: round.turns};
+                // this.roundsState.rounds[index] = roundData;
             },
             getRoundById(roundId) {
                 return this.rounds.find((round) => round.roundId === roundId)

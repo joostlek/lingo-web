@@ -5,9 +5,11 @@
         <div class="table-container">
             <div class="header">Language</div>
             <div class="header">Size</div>
+            <div class="header"></div>
             <template v-for="(dictionary, idx) in dictionaries">
                 <div :key="idx + 'language'">{{dictionary.language}}</div>
                 <div :key="idx + 'size'">{{dictionary.size}}</div>
+                <div :key="idx + 'action'" @click="() => {goToDictionaryDetail(dictionary.dictionaryId)}" class="clickable">Go</div>
             </template>
         </div>
     </div>
@@ -25,6 +27,9 @@
             async getDictionaries () {
                 const { data } = await this.$api.get("/dictionaries");
                 this.dictionaries = data;
+            },
+            goToDictionaryDetail(dictionaryId) {
+                this.$router.push({name: 'DictionaryDetail', params: {dictionaryId}})
             }
         },
         async created() {
@@ -38,7 +43,7 @@
         max-width: 600px;
         display: grid;
         grid-template-rows: 32px;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 32px;
         align-items: stretch;
 
         .header {
