@@ -3,7 +3,7 @@
         <h3>Game</h3>
         <div v-if="gameState.game != null">
             <h6>GameID: {{game.gameId}}</h6>
-            <RoundSelector v-if="rounds != null && rounds.length > 0" :rounds="rounds" v-model="selectedRound"></RoundSelector>
+            <RoundSelector v-if="rounds != null" :rounds="rounds" v-model="selectedRound" @submit="newRound"></RoundSelector>
             <RoundView v-if="selectedRound" :round="getSelectedRound" @submit="onGuess"/>
         </div>
     </div>
@@ -38,7 +38,9 @@
                 data.forEach((round) => {
                     round.turns = null
                 });
-                this.selectedRound = data[data.length - 1].roundId;
+                if (data.length !== 0) {
+                    this.selectedRound = data[data.length - 1].roundId;
+                }
                 this.roundsState.rounds = data;
             },
             async getTurnsForRoundId(roundId) {
@@ -58,6 +60,12 @@
             },
             async onGuess(event) {
                 await this.doGuess(event.roundId, event.guess);
+            },
+            async newRound() {
+                const { data } = await this.$api.post(`/games/${this.gameId}/rounds`);
+                data.turns = [];
+                this.roundsState.rounds.push(data);
+                this.selectedRound = data.roundId;
             }
         },
         computed: {
