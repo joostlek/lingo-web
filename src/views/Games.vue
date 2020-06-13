@@ -1,6 +1,16 @@
 <template>
     <div>
         <h3>Games</h3>
+        <select v-model="chosenDictionaryId">
+            <option v-for="(dictionary, idx) in dictionaries" :key="idx" :value="dictionary.dictionaryId">{{dictionary.language}}</option>
+        </select>
+        <input type="radio" id="5" name="wordlength" value="5" v-model="wordLength">
+        <label for="5">5</label>
+        <input type="radio" id="6" name="wordlength" value="6" v-model="wordLength">
+        <label for="6">6</label>
+        <input type="radio" id="7" name="wordlength" value="7" v-model="wordLength">
+        <label for="7">7</label>
+        <button @click="startNewGame">New game</button>
         <div class="table-container">
             <div class="header">Created at</div>
             <div class="header">Word length</div>
@@ -21,18 +31,30 @@
             games: [],
             loading: false,
             error: null,
+            dictionaries: [],
+            chosenDictionaryId: '',
+            wordLength: '5',
         }),
         methods: {
             async getGames() {
                 const { data } = await this.$api.get("/games");
                 this.games = data;
             },
+            async getDictionaries () {
+                const { data } = await this.$api.get("/dictionaries");
+                this.dictionaries = data;
+            },
             goToGameDetail(gameId) {
                 this.$router.push({name: 'GameDetail', params: {gameId}})
+            },
+            async startNewGame() {
+                const { data } = await this.$api.post("/games", {wordLength: parseInt(this.wordLength), chosenDictionaryId: this.chosenDictionaryId})
+                this.games = [data, ...this.games];
             }
         },
         async created() {
             await this.getGames();
+            await this.getDictionaries();
         }
     }
 </script>
