@@ -2,6 +2,7 @@
     <div>
         <h3>Dictionaries</h3>
         <p>These are the available dictionaries. You can create custom ones!</p>
+        <input type="text" v-model="newDictionary"><button @click="addDictionary">Add dictionary</button>
         <div class="table-container">
             <div class="header">Language</div>
             <div class="header">Size</div>
@@ -21,7 +22,8 @@
         data: () => ({
             dictionaries: [],
             loading: false,
-            error: null
+            error: null,
+            newDictionary: ''
         }),
         methods: {
             async getDictionaries () {
@@ -30,6 +32,11 @@
             },
             goToDictionaryDetail(dictionaryId) {
                 this.$router.push({name: 'DictionaryDetail', params: {dictionaryId}})
+            },
+            async addDictionary() {
+                const { data } = await this.$api.post("/dictionaries", {language: this.newDictionary});
+                this.dictionaries = [...this.dictionaries, data];
+                this.newDictionary = '';
             }
         },
         async created() {

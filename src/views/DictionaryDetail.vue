@@ -35,6 +35,7 @@
                 const dictionaryId = this.$route.params.dictionaryId;
                 const { data } = await this.$api.post(`/dictionaries/${dictionaryId}/words`, {word: this.newWord})
                 this.words = [...this.words, data]
+                this.newWord = '';
             }
         },
         async created() {
