@@ -8,3 +8,5 @@ Lingo is a word guessing game powered by Spring boot and Vue.
 2. Clone this repo with `git clone https://github.com/joostlek/lingo-web`.
 3. Run `yarn` to download all dependencies.
 4. Run `yarn serve` to start the application. 
+
+The project can also be run through Docker. The github package repository stores the image. You can find it [here](https://github.com/joostlek/lingo-web/packages/267853).
