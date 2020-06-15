@@ -13,4 +13,4 @@ The project can also be run through Docker. The github package repository stores
 
 ## 🖼 Screenshot
 
-![screen.png](joostlek)
+![Screenshot for the background](screen.png)
